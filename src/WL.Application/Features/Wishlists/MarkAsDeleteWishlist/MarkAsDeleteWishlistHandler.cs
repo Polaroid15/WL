@@ -2,6 +2,7 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using WL.Application.Common.Exceptions;
 using WL.Application.Common.Interfaces;
+using WL.Domain.Entities;
 
 namespace WL.Application.Features.Wishlists.MarkAsDeleteWishlist;
 
@@ -15,7 +16,7 @@ public class MarkAsDeleteWishlistHandler : IRequestHandler<MarkAsDeleteWishlistC
             .SingleOrDefaultAsync(cancellationToken);
 
         if (entity == null) {
-            throw new NotFoundException(nameof(Domain.Entities.Wishlist), request.Id);
+            throw new NotFoundException(nameof(Wishlist), request.Id);
         }
 
         _context.Wishlists.Remove(entity);

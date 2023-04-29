@@ -18,12 +18,9 @@ public class CreateWishlistCommand : IRequest<Guid>
 
 public class CreateWishlistHandler : IRequestHandler<CreateWishlistCommand, Guid>
 {
-    private readonly IWishlistItemRepository _repository;
+    private readonly IApplicationDbContext _context;
+    public CreateWishlistHandler(IApplicationDbContext context) => _context = context;
 
-    public CreateWishlistHandler(IWishlistItemRepository repository)
-    {
-        _repository = repository;
-    }
 
     public async Task<Guid> Handle(CreateWishlistCommand request, CancellationToken cancellationToken)
     {

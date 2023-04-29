@@ -30,7 +30,7 @@ public class AppDbContext  : ApiAuthorizationDbContext<ApplicationUser>, IApplic
         _auditableEntitySaveChangesInterceptor = auditableEntitySaveChangesInterceptor;
     }
 
-    public DbSet<Domain.Entities.Wishlist> Wishlists => Set<Domain.Entities.Wishlist>();
+    public DbSet<Wishlist> Wishlists => Set<Wishlist>();
     public DbSet<WishlistItem> WishlistItems => Set<WishlistItem>();
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
