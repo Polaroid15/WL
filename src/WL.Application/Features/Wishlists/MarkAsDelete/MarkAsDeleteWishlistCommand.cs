@@ -4,7 +4,9 @@ using WL.Application.Common.Exceptions;
 using WL.Application.Common.Interfaces;
 using WL.Domain.Entities;
 
-namespace WL.Application.Features.Wishlists.MarkAsDeleteWishlist;
+namespace WL.Application.Features.Wishlists.MarkAsDelete;
+
+public record MarkAsDeleteWishlistCommand(long WishlistId) : IRequest;
 
 public class MarkAsDeleteWishlistHandler : IRequestHandler<MarkAsDeleteWishlistCommand> {
     private readonly IApplicationDbContext _context;
@@ -12,11 +14,11 @@ public class MarkAsDeleteWishlistHandler : IRequestHandler<MarkAsDeleteWishlistC
 
     public async Task Handle(MarkAsDeleteWishlistCommand request, CancellationToken cancellationToken) {
         var entity = await _context.Wishlists
-            .Where(l => l.Id == request.Id)
+            .Where(l => l.Id == request.WishlistId)
             .SingleOrDefaultAsync(cancellationToken);
 
         if (entity == null) {
-            throw new NotFoundException(nameof(Wishlist), request.Id);
+            throw new NotFoundException(nameof(Wishlist), request.WishlistId);
         }
 
         _context.Wishlists.Remove(entity);
@@ -24,5 +26,3 @@ public class MarkAsDeleteWishlistHandler : IRequestHandler<MarkAsDeleteWishlistC
         await _context.SaveChangesAsync(cancellationToken);
     }
 }
-
-public record MarkAsDeleteWishlistCommand(long Id) : IRequest;

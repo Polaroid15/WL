@@ -26,7 +26,7 @@ public class UserWishlistController : ApiControllerBase
     [ProducesDefaultResponseType]
     public async Task<IActionResult> Update(int id/*, [FromBody] UpdateWishlistCommand command*/)
     {
-        // if (id != command.Id)
+        // if (id != command.WishlistId)
         // {
             // return BadRequest();
         // }
@@ -39,7 +39,7 @@ public class UserWishlistController : ApiControllerBase
     [HttpGet("{id:guid}")]
     public async Task<IActionResult> Get(Guid id)
     {
-        // var result = await _mediator.Send(new GetWishlistQuery { Id = id });
+        // var result = await _mediator.Send(new GetWishlistQuery { WishlistId = id });
         return new JsonResult(null);
     }
     

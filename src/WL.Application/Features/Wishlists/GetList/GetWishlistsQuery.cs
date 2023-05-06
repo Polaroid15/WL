@@ -5,7 +5,11 @@ using WL.Domain.Entities;
 
 namespace WL.Application.Features.Wishlists.GetList;
 
-public class GetWishlistsQuery : IRequest<PaginatedList<Wishlist>> { }
+public class GetWishlistsQuery : IRequest<PaginatedList<Wishlist>> {
+    public int UserId { get; init; }
+    public int PageNumber { get; init; } = 1;
+    public int PageSize { get; init; } = 10;
+}
 
 public class GetWishlistsHandler : IRequestHandler<GetWishlistsQuery, PaginatedList<Wishlist>> {
     private readonly IApplicationDbContext _context;
