@@ -20,8 +20,6 @@ public static class ConfigureServices
         DefaultTypeMap.MatchNamesWithUnderscores = true;
         SqlMapper.AddTypeHandler(JObjectHandler.Instance);
 
-        services.AddDbContext<AppDbContext>(options =>
-            options.UseNpgsql(configuration.GetConnectionString("WishesDb")));
         if (configuration.GetValue<bool>("UseInMemoryDatabase"))
         {
             services.AddDbContext<AppDbContext>(options =>
@@ -29,7 +27,7 @@ public static class ConfigureServices
         }
         else
         {
-            services.AddDbContext<AppDbContext>(options => options.UseSqlServer(configuration.GetConnectionString("wishes_db")));
+            services.AddDbContext<AppDbContext>(options => options.UseNpgsql(configuration.GetConnectionString("WishesDb")));
         }
 
         services.AddScoped<IApplicationDbContext>(provider => provider.GetRequiredService<AppDbContext>());

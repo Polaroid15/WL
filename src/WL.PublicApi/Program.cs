@@ -1,10 +1,4 @@
-using System.Reflection;
 using Ardalis.ListStartupServices;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using WL.Application;
 using WL.Application.Common.Interfaces;
 using WL.Infrastructure;
@@ -15,11 +9,6 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Logging.AddConsole();
 
 builder.Services.AddScoped(typeof(IAppLogger<>), typeof(LoggerAdapter<>));
-
-var env = builder.Environment.EnvironmentName;
-builder.Configuration.AddEnvironmentVariables();
-builder.Configuration.AddJsonFile("appsettings.json");
-builder.Configuration.AddJsonFile($"appsettings.{env}.json", optional: true);
 
 builder.Services.AddControllers();
 builder.Services.AddApplication();
@@ -42,7 +31,7 @@ builder.Services.Configure<ServiceConfig>(config =>
 var app = builder.Build();
 app.UseCustomHealthChecks();
 
-if (app.Environment.IsDevelopment() || app.Environment.EnvironmentName == "Docker")
+if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
